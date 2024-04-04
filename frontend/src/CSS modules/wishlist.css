@@ -1,0 +1,63 @@
+.cart-page {
+    padding: 1rem 10%;
+}
+
+.nav-container{
+height: 79px;
+}
+
+.cart-heading{
+display: flex;
+justify-content: center;
+width: 100%;
+}
+
+.h-5 {
+font-size: 2.4rem;
+font-weight: 600;
+}
+
+.Cart_productsAndPrice__t5c0I {
+display: flex;
+gap: var(--space-md);
+width: 100%;
+}
+
+.Cart_myProducts__p8Rax {
+display: flex;
+flex: 2 1;
+flex-direction: column;
+}
+
+.Cart_emptyCartMsgWrapper__xTvqO {
+align-items: center;
+display: flex;
+flex-direction: column;
+height: 100%;
+justify-content: center;
+width: 100%;
+}
+
+.Cart_emptyCartMsg__ADKpZ {
+    color: #888; /* Substitute var(--grey-5) with actual color value */
+    font-size: 22px; /* Substitute var(--fs-xs-1) with actual font size value */
+    font-weight: 500; /* Substitute var(--fw-5) with actual font weight value */
+    margin-bottom: 10px; /* Substitute var(--space-sm) with actual margin value */
+    text-align: center;
+}
+
+.Cart_shopnowButton__NWGjF {
+background-color: #23a6f0; /* Substitute var(--primary) with actual color value */
+color: #fff;
+font-size: 1rem; /* Substitute var(--fs-xxs-1) with actual font size value */
+text-decoration: none;
+}
+
+.button{
+border: none;
+border-radius: 0.6rem;
+box-shadow: 0 1px 4px 1px rgba(6, 10, 36, .1), 0 5px 10px 0 rgba(6, 10, 36, .08);
+cursor: pointer;
+padding: 0.4rem 1.2rem;
+transition: .25s ease-in-out;
+}

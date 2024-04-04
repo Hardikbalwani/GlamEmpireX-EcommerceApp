@@ -1,0 +1,15 @@
+.mybtn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: large;
+    font-weight: 500;
+    color: white;
+    background-color: pink;
+    border: 0px;
+    transition: background-color 0.3s; /* Add a transition effect on background-color */
+  }
+  
+  .mybtn:hover {
+    background-color: #f5a6b4; /* Change the background color on hover */
+  }
+  

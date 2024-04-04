@@ -1,0 +1,35 @@
+.navbar-brand{
+    margin-left: 150px;
+    margin-right: 50px;
+    font-size: 35px;
+}
+
+.nav-wrapper{
+    box-shadow: 5px 5px 5px grey; 
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    min-width: 60px;
+    z-index: 100;
+}
+
+.nav-ele{
+    text-decoration: none;
+    margin-left: 50px;
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}
+
+.icons{
+    display: flex;
+    width: 120px;
+    margin-left: 20px;
+    justify-content: space-around;
+    font-size: 20px;
+}
+
+.icons i{
+    cursor: pointer;
+}
