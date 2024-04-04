@@ -1,0 +1,5 @@
+mongo GlamEmpireX
+username : hardikbalwani2003
+password : 63cvHkfC6spsth03
+
+1 -> SEO Optimizaton using react helmet package
