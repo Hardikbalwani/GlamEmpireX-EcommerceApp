@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { useAuth } from '../context/auth'
 import Navbar from './Navbar'
 import Footer from './Footer'
@@ -13,12 +13,22 @@ import image7 from '../images/photo-1586220742613-b731f66f7743.avif'
 import image8 from '../images/rosa-rafael-pxax5WuM7eY-unsplash.jpg'
 
 const Products = () => {
+  const [showFilters, setShowFilters] = useState(false);
   // const  { auth, setAuth } = useAuth();
   return (
     <>
       <Navbar />
+      <div className="filter-toggle-container">
+        <button 
+            className="filter-toggle-btn"
+            onClick={() => setShowFilters(!showFilters)}
+        >
+            <i className="fa-solid fa-filter"></i> {showFilters ? 'Hide Filters' : 'Show Filters'}
+        </button>
+      </div>
+
       <div className="products-container">
-        <div className="products-side-panel">
+        <div className={`products-side-panel ${showFilters ? 'open' : ''}`}>
           <button className="products-btn">Clear Filters</button>
           <div className="categories-section">
             <h2>Categories</h2>
