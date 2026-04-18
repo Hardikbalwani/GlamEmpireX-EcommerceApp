@@ -239,4 +239,30 @@
     padding-top: 30px;
 }
 
-
+@media (max-width: 991px) {
+    .main-content {
+        flex-direction: column;
+        height: auto;
+        padding-top: 120px; /* To prevent overlapping under mobile navbar */
+    }
+    .main-desc, .main-image {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .deals-section, .category-section {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        gap: 20px;
+    }
+    .deals-card, .category-type {
+        width: 100%;
+        max-width: 300px;
+    }
+    .improve-display {
+        height: auto;
+    }
+    .improve-display-img {
+        height: auto;
+    }
+}
