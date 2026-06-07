@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../Spinner";
 
+const API = process.env.REACT_APP_API || '';
+
 export default function PrivateRoute() {
   const [ok, setOk] = useState(false);
   const { auth } = useAuth();
@@ -11,16 +13,11 @@ export default function PrivateRoute() {
   useEffect(() => {
     const authCheck = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/v1/auth/user-auth", {
+        const res = await axios.get(`${API}/api/v1/auth/user-auth`, {
           headers: {
             Authorization: auth?.token,
           },
         });
-
-        console.log("Response Status:", res.status);
-        console.log("Response Headers:", res.headers);
-        console.log("Response Data:", res.data);
-
 
         if (res.data.ok) {
           setOk(true);
@@ -38,8 +35,6 @@ export default function PrivateRoute() {
     }
     // eslint-disable-next-line
   }, [auth?.token]);
-
-
 
   return ok ? <Outlet /> : <Spinner />;
 }
