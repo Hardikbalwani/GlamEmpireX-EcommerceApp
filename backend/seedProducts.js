@@ -19,7 +19,7 @@ const uploadImage = async (filename) => {
 const seedProducts = async () => {
     try {
         // ✅ FIX 3: Connect to MongoDB BEFORE doing anything with the DB
-        await mongoose.connect(process.env.MONGO_URL)
+        await mongoose.connect(process.env.MONGO_URI)
         console.log('✅ Connected to MongoDB Atlas')
 
         await productModel.deleteMany({})
