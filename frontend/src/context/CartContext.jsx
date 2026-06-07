@@ -11,6 +11,7 @@ const CartProvider = ({ children }) => {
     const { auth } = useAuth() // we need the token from auth context
 
     // Step 2: Every time user logs in, fetch their cart from backend
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (auth?.token) {
             fetchCart()

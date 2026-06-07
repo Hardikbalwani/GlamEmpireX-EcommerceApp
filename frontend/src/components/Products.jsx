@@ -6,15 +6,6 @@ import { useCart } from '../context/CartContext'  // 👈 add this
 import { useAuth } from '../context/auth'          // 👈 add this
 import { useNavigate } from 'react-router-dom'     // 👈 add this
 
-// 👇 import your images same as before
-import image1 from '../images/christin-hume-0MoF-Fe0w0A-unsplash.jpg'
-import image2 from '../images/element5-digital-ceWgSMd8rvQ-unsplash.jpg'
-import image3 from '../images/joanna-kosinska-mVdzV_HTyH4-unsplash.jpg'
-import image4 from '../images/pexels-moose-photos-1029896.jpg'
-import image5 from '../images/pexels-shiny-diamond-3373738.jpg'
-import image6 from '../images/pexels-alesia-kozik-7797449.jpg'
-import image7 from '../images/photo-1586220742613-b731f66f7743.avif'
-import image8 from '../images/rosa-rafael-pxax5WuM7eY-unsplash.jpg'
 
 // 👇 Step 1: Put all product data in one place
 // _id is TEMPORARY — later this will come from MongoDB
