@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import '../CSS modules/navbar.css'
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/auth";        
+import { useCart } from "../context/CartContext"; 
 
 const Navbar = () => {
     const [showMobileSearch, setShowMobileSearch] = useState(false);
+    const { auth, setAuth } = useAuth()           
+    const { cartCount } = useCart()               
+
+    // handle logout
+    const handleLogout = () => {
+        // clear auth context
+        setAuth({ user: null, token: "" })
+        // clear localStorage
+        localStorage.removeItem("auth")
+    }
 
     return (
         <>
@@ -27,9 +39,52 @@ const Navbar = () => {
                         <Link className="nav-ele" to="/products">Explore</Link>
 
                         <div className="icons">
-                            <Link to="/cart"><i className="fa-solid fa-cart-shopping" style={{ color: 'black' }}></i></Link>
-                            <Link to="/Wishlist"><i className="fa-solid fa-heart" style={{ color: 'black' }}></i></Link>
-                            <Link to="/profile"><i className="fa-solid fa-user" style={{ color: 'black' }}></i></Link>
+
+                            {/* 👇 Cart icon with live count badge */}
+                            <Link to="/cart" style={{ position: 'relative' }}>
+                                <i className="fa-solid fa-cart-shopping" style={{ color: 'black' }}></i>
+                                {/* only show badge if cart has items */}
+                                {cartCount > 0 && (
+                                    <span style={{
+                                        position: 'absolute',
+                                        top: '-8px',
+                                        right: '-8px',
+                                        background: 'pink',
+                                        color: 'white',
+                                        borderRadius: '50%',
+                                        fontSize: '10px',
+                                        width: '16px',
+                                        height: '16px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontWeight: 'bold'
+                                    }}>
+                                        {cartCount}
+                                    </span>
+                                )}
+                            </Link>
+
+                            <Link to="/Wishlist">
+                                <i className="fa-solid fa-heart" style={{ color: 'black' }}></i>
+                            </Link>
+
+                            {/* 👇 Show login/logout based on auth state */}
+                            {auth?.user ? (
+                                // user is logged in — show logout
+                                <span
+                                    onClick={handleLogout}
+                                    style={{ cursor: 'pointer', color: 'black' }}
+                                >
+                                    <i className="fa-solid fa-right-from-bracket"></i>
+                                </span>
+                            ) : (
+                                // user is not logged in — show login link
+                                <Link to="/login">
+                                    <i className="fa-solid fa-user" style={{ color: 'black' }}></i>
+                                </Link>
+                            )}
+
                         </div>
                     </div>
                 </nav>
