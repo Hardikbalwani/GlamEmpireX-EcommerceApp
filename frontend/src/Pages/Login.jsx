@@ -3,15 +3,15 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import '../CSS modules/register.css'
 import { toast } from 'react-toastify'
-import { useNavigate, Link,useLocation } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import axios from 'axios';
 import { useAuth } from '../context/auth'
 
 const Register = () => {
-    // from submit function
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const API = process.env.REACT_APP_API || '';
 
     const handleLogout = () => {
         setAuth({
@@ -26,7 +26,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, { email, password });
+            const res = await axios.post(`${API}/api/v1/auth/login`, { email, password });
 
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -129,11 +129,9 @@ const Register = () => {
                                 Logout
                             </button>
                         </Link>
-
                     </div>
                 </>
             )}
-
             <Footer />
         </>
     )
