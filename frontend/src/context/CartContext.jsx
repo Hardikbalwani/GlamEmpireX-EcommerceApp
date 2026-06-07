@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect, useCallback } from "react"
 import { useAuth } from "./auth"
 import axios from "axios"
 
@@ -8,21 +8,10 @@ const CartContext = createContext()
 const CartProvider = ({ children }) => {
 
     const [cart, setCart] = useState({ items: [] })
-    const { auth } = useAuth() // we need the token from auth context
-
-    // Step 2: Every time user logs in, fetch their cart from backend
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => {
-        if (auth?.token) {
-            fetchCart()
-        } else {
-            // if logged out, clear the cart
-            setCart({ items: [] })
-        }
-    }, [auth?.token]) // runs whenever token changes (login/logout)
+    const { auth } = useAuth()
 
     // Step 3: Get cart from backend
-    const fetchCart = async () => {
+    const fetchCart = useCallback(async () => {
         try {
             const { data } = await axios.get('/api/v1/cart', {
                 headers: {
@@ -35,7 +24,16 @@ const CartProvider = ({ children }) => {
         } catch (error) {
             console.log(error)
         }
-    }
+    }, [auth?.token])
+
+    // Step 2: Every time user logs in, fetch their cart from backend
+    useEffect(() => {
+        if (auth?.token) {
+            fetchCart()
+        } else {
+            setCart({ items: [] })
+        }
+    }, [auth?.token, fetchCart])
 
     // Step 4: Add item to cart
     const addToCart = async (productId, quantity = 1) => {
@@ -50,7 +48,7 @@ const CartProvider = ({ children }) => {
                 }
             )
             if (data?.success) {
-                setCart(data.cart) // update memory with new cart
+                setCart(data.cart)
             }
         } catch (error) {
             console.log(error)
@@ -96,7 +94,7 @@ const CartProvider = ({ children }) => {
         }
     }
 
-    // Step 7: Count total items in cart (for navbar badge)
+    // Step 7: Count total items in cart
     const cartCount = cart?.items?.reduce(
         (total, item) => total + item.quantity, 0
     ) || 0
@@ -114,7 +112,6 @@ const CartProvider = ({ children }) => {
     )
 }
 
-// custom hook — same pattern as useAuth
 const useCart = () => useContext(CartContext)
 
 export { useCart, CartProvider }
