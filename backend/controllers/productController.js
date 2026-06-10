@@ -1,6 +1,6 @@
 import productModel from '../models/productModel.js'
 
-// GET ALL PRODUCTS
+
 export const getProductsController = async (req, res) => {
     try {
         const products = await productModel.find({})
@@ -17,7 +17,7 @@ export const getProductsController = async (req, res) => {
     }
 }
 
-// GET SINGLE PRODUCT
+
 export const getSingleProductController = async (req, res) => {
     try {
         const product = await productModel.findById(req.params.id)

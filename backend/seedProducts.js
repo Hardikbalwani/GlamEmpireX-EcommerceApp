@@ -1,5 +1,5 @@
-import 'dotenv/config'                          // ✅ FIX 1: load .env FIRST before anything else
-import mongoose from 'mongoose'                  // ✅ FIX 2: import mongoose
+import 'dotenv/config'                          
+import mongoose from 'mongoose'                  
 import cloudinary from './config/cloudinary.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -18,7 +18,7 @@ const uploadImage = async (filename) => {
 
 const seedProducts = async () => {
     try {
-        // ✅ FIX 3: Connect to MongoDB BEFORE doing anything with the DB
+        
         await mongoose.connect(process.env.MONGO_URI)
         console.log('✅ Connected to MongoDB Atlas')
 
@@ -102,7 +102,7 @@ const seedProducts = async () => {
             console.log(`  image: ${p.image}`)
         })
 
-        // ✅ FIX 4: Disconnect cleanly after seeding is done
+        
         await mongoose.disconnect()
         console.log('🔌 Disconnected from MongoDB')
 

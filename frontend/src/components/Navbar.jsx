@@ -9,11 +9,11 @@ const Navbar = () => {
     const { auth, setAuth } = useAuth()           
     const { cartCount } = useCart()               
 
-    // handle logout
+    
     const handleLogout = () => {
-        // clear auth context
+        
         setAuth({ user: null, token: "" })
-        // clear localStorage
+        
         localStorage.removeItem("auth")
     }
 
@@ -71,7 +71,7 @@ const Navbar = () => {
 
                             {/* 👇 Show login/logout based on auth state */}
                             {auth?.user ? (
-                                // user is logged in — show logout
+                                
                                 <span
                                     onClick={handleLogout}
                                     style={{ cursor: 'pointer', color: 'black' }}
@@ -79,7 +79,7 @@ const Navbar = () => {
                                     <i className="fa-solid fa-right-from-bracket"></i>
                                 </span>
                             ) : (
-                                // user is not logged in — show login link
+                                
                                 <Link to="/login">
                                     <i className="fa-solid fa-user" style={{ color: 'black' }}></i>
                                 </Link>

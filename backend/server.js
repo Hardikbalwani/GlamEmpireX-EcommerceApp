@@ -7,16 +7,12 @@ import cartRoutes from './routes/cartRoute.js'
 import productRoutes from './routes/productRoute.js'
 import cors from "cors";
 
-//configure env
 dotenv.config();
 
-//database config
 connectDB();
 
-// rest object
 const app = express();
 
-//middlewares
 app.use(cors({
     origin: ["http://localhost:3000", "https://glam-empire-x-ecommerce-app.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -27,17 +23,14 @@ app.use(morgan('dev'))
 
 
 
-// routes
 app.use('/api/v1/auth/', authRoutes)
 app.use('/api/v1/cart/', cartRoutes)
 app.use('/api/v1/products/', productRoutes)
 
-//rest api
 app.get('/', (req,res) => {
     res.send("<h1>Welcome to ecommerce app</h1>");
 })
 
-//PORT
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {

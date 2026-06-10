@@ -2,14 +2,12 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import '../CSS modules/products.css'
-import { useCart } from '../context/CartContext'  // 👈 add this
-import { useAuth } from '../context/auth'          // 👈 add this
-import { useNavigate } from 'react-router-dom'     // 👈 add this
+import { useCart } from '../context/CartContext'  
+import { useAuth } from '../context/auth'          
+import { useNavigate } from 'react-router-dom'     
 
 
-// 👇 Step 1: Put all product data in one place
-// _id is TEMPORARY — later this will come from MongoDB
-// for now we use fake IDs just to test the UI
+
 const hardcodedProducts = [
     {
         _id: '6a2426497a6b73a9d675b1c1',
@@ -103,20 +101,18 @@ const hardcodedProducts = [
 
 const Products = () => {
     const [showFilters, setShowFilters] = useState(false)
-    const { addToCart } = useCart()       // 👈 get addToCart from cart memory
-    const { auth } = useAuth()            // 👈 get auth to check if logged in
-    const navigate = useNavigate()        // 👈 to redirect to login if needed
+    const { addToCart } = useCart()       
+    const { auth } = useAuth()            
+    const navigate = useNavigate()        
 
-    // 👇 Step 2: Handle Add to Cart button click
+    
     const handleAddToCart = (product) => {
-        // if user is not logged in → send them to login page
+       
         if (!auth?.token) {
             navigate('/login')
             return
         }
-        // if logged in → add to cart
-        // NOTE: this uses temp_id for now
-        // after seeding products to DB, this will use real MongoDB _id
+        
         addToCart(product._id)
     }
 
@@ -135,7 +131,6 @@ const Products = () => {
 
             <div className="products-container">
                 <div className={`products-side-panel ${showFilters ? 'open' : ''}`}>
-                    {/* your filters stay exactly the same */}
                     <button className="products-btn">Clear Filters</button>
                     <div className="categories-section">
                         <h2>Categories</h2>
@@ -174,26 +169,22 @@ const Products = () => {
                         <span> (Showing {hardcodedProducts.length} Products)</span>
                     </h1>
 
-                    {/* 👇 Step 3: Use .map() instead of copy pasting cards */}
                     <div className="cards">
                         {hardcodedProducts.map((product) => (
                             <div className="ProductListing_productCard__1kVwy" key={product._id}>
 
-                                {/* Discount Badge */}
                                 <div className="ProductListing_cardBadge__IUAcG">
                                     <span className="ProductListing_cardDiscount__618xO" style={{backgroundColor: 'red'}}>
                                         {product.discount}
                                     </span>
                                 </div>
 
-                                {/* Product Image */}
                                 <img
                                     className="ProductListing_productImage__hpByi"
                                     src={product.image}
                                     alt={product.name}
                                 />
 
-                                {/* Product Info */}
                                 <div className="ProductListing_cardTitleWrapper__1cWA2">
                                     <h2 className="ProductListing_title__vogs2">
                                         {product.name}
@@ -203,7 +194,6 @@ const Products = () => {
                                     </small>
                                 </div>
 
-                                {/* Price */}
                                 <p className="ProductListing_cardPrice__evk5D">
                                     $<strike>{product.oldPrice}</strike>
                                     <span className="ProductListing_cardNewPrice__iJSO5">
@@ -211,9 +201,7 @@ const Products = () => {
                                     </span>/-
                                 </p>
 
-                                {/* Buttons */}
                                 <div className="ProductListing_btnsWrapper__S7FUN">
-                                    {/* 👇 Add to Cart — now actually works! */}
                                     <button
                                         className="ProductListing_buyButton__wnDyg"
                                         onClick={() => handleAddToCart(product)}
@@ -221,13 +209,11 @@ const Products = () => {
                                         🛒 Add to Cart
                                     </button>
 
-                                    {/* Wishlist button */}
                                     <button className="ProductListing_wishlist__0pSHd ProductListing_buyButton__wnDyg">
                                         ♡
                                     </button>
                                 </div>
 
-                                {/* Rating */}
                                 <div className="ProductListing_rating__nckA8 ProductListing_ratingSuccess__cdXmI">
                                     ⭐ {product.rating}
                                 </div>

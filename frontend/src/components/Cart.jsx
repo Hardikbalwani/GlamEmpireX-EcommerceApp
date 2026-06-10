@@ -20,7 +20,6 @@ const Cart = () => {
             </div>
 
             <div className="cart-page">
-                {/* Heading */}
                 <div className="cart-heading">
                     <h5 className="h-5">My Cart
                         {cart?.items?.length > 0 && (
@@ -33,10 +32,8 @@ const Cart = () => {
 
                 <div className="Cart_productsAndPrice__t5c0I">
 
-                    {/* LEFT — Product List */}
                     <section className="Cart_myProducts__p8Rax">
 
-                        {/* Empty Cart */}
                         {cart?.items?.length === 0 ? (
                             <div className="Cart_emptyCartMsgWrapper__xTvqO">
                                 <img
@@ -58,12 +55,10 @@ const Cart = () => {
                             </div>
 
                         ) : (
-                            /* Cart Items List */
                             <div className="cart-items-list">
                                 {cart.items.map((item) => (
                                     <div className="cart-item-card" key={item.product?._id}>
 
-                                        {/* Product Image */}
                                         <div className="cart-item-image-wrapper">
                                             <img
                                                 src={item.product?.image}
@@ -76,7 +71,6 @@ const Cart = () => {
                                             />
                                         </div>
 
-                                        {/* Product Info */}
                                         <div className="cart-item-details">
                                             <h4 className="cart-item-name">
                                                 {item.product?.name}
@@ -89,7 +83,6 @@ const Cart = () => {
                                             </p>
                                         </div>
 
-                                        {/* Quantity Controls */}
                                         <div className="cart-item-quantity">
                                             <button
                                                 className="qty-btn"
@@ -110,7 +103,6 @@ const Cart = () => {
                                             </button>
                                         </div>
 
-                                        {/* Item Total */}
                                         <div className="cart-item-total">
                                             <span className="total-label">Subtotal</span>
                                             <span className="total-amount">
@@ -118,7 +110,6 @@ const Cart = () => {
                                             </span>
                                         </div>
 
-                                        {/* Remove Button */}
                                         <button
                                             className="cart-remove-btn"
                                             onClick={() => removeFromCart(item.product?._id)}
@@ -132,7 +123,6 @@ const Cart = () => {
                         )}
                     </section>
 
-                    {/* RIGHT — Order Summary */}
                     {cart?.items?.length > 0 && (
                         <section className="cart-summary">
                             <h3 className="summary-heading">Order Summary</h3>
@@ -153,13 +143,11 @@ const Cart = () => {
 
                             <hr className="summary-divider" />
 
-                            {/* Total */}
                             <div className="summary-total">
                                 <span>Total</span>
                                 <span className="total-price">${totalPrice.toFixed(2)}</span>
                             </div>
 
-                            {/* Checkout Button */}
                             <button
                                 className="checkout-btn"
                                 onClick={() => alert('Checkout coming soon!')}
@@ -167,7 +155,6 @@ const Cart = () => {
                                 Proceed to Checkout
                             </button>
 
-                            {/* Continue Shopping */}
                             <button
                                 className="continue-btn"
                                 onClick={() => navigate('/products')}

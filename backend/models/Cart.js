@@ -10,11 +10,11 @@ const cartItemSchema = new mongoose.Schema({
     quantity: {
         type: Number,
         default: 1,
-        min: 1   // quantity can never go below 1
+        min: 1   
     }
 })
 
-// This defines the full cart
+
 const cartSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
