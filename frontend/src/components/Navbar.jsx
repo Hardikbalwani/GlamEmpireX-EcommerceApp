@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import '../CSS modules/navbar.css'
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/auth";        
-import { useCart } from "../context/CartContext"; 
+import { useAuth } from "../context/auth";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 
 const Navbar = () => {
     const [showMobileSearch, setShowMobileSearch] = useState(false);
-    const { auth, setAuth } = useAuth()           
-    const { cartCount } = useCart()               
+    const { auth, setAuth } = useAuth()
+    const { cartCount } = useCart()
+    const { wishlistCount } = useWishlist()
 
-    
+
     const handleLogout = () => {
-        
+
         setAuth({ user: null, token: "" })
-        
+
         localStorage.removeItem("auth")
     }
 
@@ -65,13 +67,32 @@ const Navbar = () => {
                                 )}
                             </Link>
 
-                            <Link to="/Wishlist">
+                            <Link to="/Wishlist" style={{ position: 'relative' }}>
                                 <i className="fa-solid fa-heart" style={{ color: 'black' }}></i>
+                                {wishlistCount > 0 && (
+                                    <span style={{
+                                        position: 'absolute',
+                                        top: '-8px',
+                                        right: '-8px',
+                                        background: 'pink',
+                                        color: 'white',
+                                        borderRadius: '50%',
+                                        fontSize: '10px',
+                                        width: '16px',
+                                        height: '16px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontWeight: 'bold'
+                                    }}>
+                                        {wishlistCount}
+                                    </span>
+                                )}
                             </Link>
 
                             {/* 👇 Show login/logout based on auth state */}
                             {auth?.user ? (
-                                
+
                                 <span
                                     onClick={handleLogout}
                                     style={{ cursor: 'pointer', color: 'black' }}
@@ -79,7 +100,7 @@ const Navbar = () => {
                                     <i className="fa-solid fa-right-from-bracket"></i>
                                 </span>
                             ) : (
-                                
+
                                 <Link to="/login">
                                     <i className="fa-solid fa-user" style={{ color: 'black' }}></i>
                                 </Link>

@@ -12,26 +12,28 @@ import Profile from './Pages/user/Profile';
 import PrivateRoute from './components/Routes/Private'
 import Cart from './components/Cart';
 import Wishlist from './components/Wishlist';
+import { WishlistProvider } from './context/WishlistContext';
 
 
 function App() {
- 
   return (
-    <>
-    <Routes>
-      <Route path="/" element={<Home />}/>
-      <Route path="/profile" element={<PrivateRoute />} >
-        <Route path="" element={<Profile />}/>
-      </Route>
-      <Route path="/login" element={<Login />}/>
-      <Route path="/register" element={<Register />}/>
-      <Route path="/products" element={<Products />}/>
-      <Route path="/cart" element={<Cart />}/>
-      <Route path="/Wishlist" element={<Wishlist />}/>
-      <Route path="/*" element={<PagenotFound />} />
-    </Routes>
-      <ToastContainer  autoClose={5000} position='bottom-right'/>
-    </>
+    <WishlistProvider>
+      <>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/profile" element={<PrivateRoute />} >
+            <Route path="" element={<Profile />}/>
+          </Route>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
+          <Route path="/products" element={<Products />}/>
+          <Route path="/cart" element={<Cart />}/>
+          <Route path="/Wishlist" element={<Wishlist />}/>
+          <Route path="/*" element={<PagenotFound />} />
+        </Routes>
+        <ToastContainer autoClose={5000} position='bottom-right'/>
+      </>
+    </WishlistProvider>
   );
 }
 

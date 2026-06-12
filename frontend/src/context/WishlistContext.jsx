@@ -2,24 +2,24 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 import { useAuth } from "./auth"
 import axios from "axios"
 
-const CartContext = createContext()
+const WishlistContext = createContext()
 
 const API = process.env.REACT_APP_API || '';
 
-const CartProvider = ({ children }) => {
+const WishlistProvider = ({ children }) => {
 
-    const [cart, setCart] = useState({ items: [] })
+    const [wishlist, setWishlist] = useState({ items: [] })
     const { auth } = useAuth()
 
-    const fetchCart = useCallback(async () => {
+    const fetchWishlist = useCallback(async () => {
         try {
-            const { data } = await axios.get(`${API}/api/v1/cart`, {
+            const { data } = await axios.get(`${API}/api/v1/wishlist`, {
                 headers: {
                     Authorization: `Bearer ${auth?.token}`
                 }
             })
             if (data?.success) {
-                setCart(data.cart)
+                setWishlist(data.wishlist)
             }
         } catch (error) {
             console.log(error)
@@ -28,17 +28,17 @@ const CartProvider = ({ children }) => {
 
     useEffect(() => {
         if (auth?.token) {
-            fetchCart()
+            fetchWishlist()
         } else {
-            setCart({ items: [] })
+            setWishlist({ items: [] })
         }
-    }, [auth?.token, fetchCart])
+    }, [auth?.token, fetchWishlist])
 
-    const addToCart = async (productId, quantity = 1) => {
+    const addToWishlist = async (productId) => {
         try {
             const { data } = await axios.post(
-                `${API}/api/v1/cart/add`,
-                { productId, quantity },
+                `${API}/api/v1/wishlist/add`,
+                { productId },
                 {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
@@ -46,17 +46,18 @@ const CartProvider = ({ children }) => {
                 }
             )
             if (data?.success) {
-                setCart(data.cart)
+                setWishlist(data.wishlist)
             }
+            return data
         } catch (error) {
             console.log(error)
         }
     }
 
-    const removeFromCart = async (productId) => {
+    const removeFromWishlist = async (productId) => {
         try {
             const { data } = await axios.delete(
-                `${API}/api/v1/cart/remove/${productId}`,
+                `${API}/api/v1/wishlist/remove/${productId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
@@ -64,18 +65,18 @@ const CartProvider = ({ children }) => {
                 }
             )
             if (data?.success) {
-                setCart(data.cart)
+                setWishlist(data.wishlist)
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-    const updateQuantity = async (productId, quantity) => {
+    const moveToCart = async (productId) => {
         try {
-            const { data } = await axios.put(
-                `${API}/api/v1/cart/update`,
-                { productId, quantity },
+            const { data } = await axios.post(
+                `${API}/api/v1/wishlist/move-to-cart`,
+                { productId },
                 {
                     headers: {
                         Authorization: `Bearer ${auth?.token}`
@@ -83,31 +84,37 @@ const CartProvider = ({ children }) => {
                 }
             )
             if (data?.success) {
-                setCart(data.cart)
+                setWishlist(data.wishlist)
             }
+            return data
         } catch (error) {
             console.log(error)
         }
     }
 
-    const cartCount = cart?.items?.reduce(
-        (total, item) => total + item.quantity, 0
-    ) || 0
+    const isInWishlist = (productId) => {
+    return wishlist?.items?.some((item) => {
+        const id = item.product?._id || item.product
+        return id?.toString() === productId?.toString()
+    })
+}
+
+    const wishlistCount = wishlist?.items?.length || 0
 
     return (
-        <CartContext.Provider value={{
-            cart,
-            addToCart,
-            removeFromCart,
-            updateQuantity,
-            cartCount,
-            fetchCart   
+        <WishlistContext.Provider value={{
+            wishlist,
+            addToWishlist,
+            removeFromWishlist,
+            moveToCart,
+            isInWishlist,
+            wishlistCount
         }}>
             {children}
-        </CartContext.Provider>
+        </WishlistContext.Provider>
     )
 }
 
-const useCart = () => useContext(CartContext)
+const useWishlist = () => useContext(WishlistContext)
 
-export { useCart, CartProvider }
+export { useWishlist, WishlistProvider }

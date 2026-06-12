@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import '../CSS modules/products.css'
-import { useCart } from '../context/CartContext'  
-import { useAuth } from '../context/auth'          
-import { useNavigate } from 'react-router-dom'     
-
-
+import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/auth'
+import { useNavigate } from 'react-router-dom'
+import { useWishlist } from '../context/WishlistContext'
+import { toast } from 'react-toastify'
 
 const hardcodedProducts = [
     {
@@ -101,19 +101,37 @@ const hardcodedProducts = [
 
 const Products = () => {
     const [showFilters, setShowFilters] = useState(false)
-    const { addToCart } = useCart()       
-    const { auth } = useAuth()            
-    const navigate = useNavigate()        
+    const { addToCart } = useCart()
+    const { auth } = useAuth()
+    const navigate = useNavigate()
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
 
-    
     const handleAddToCart = (product) => {
-       
         if (!auth?.token) {
             navigate('/login')
             return
         }
-        
         addToCart(product._id)
+        toast.success(`${product.name} added to cart!`)
+    }
+
+    const handleWishlist = async (product) => {
+        if (!auth?.token) {
+            navigate('/login')
+            return
+        }
+
+        if (isInWishlist(product._id)) {
+            await removeFromWishlist(product._id)
+            toast.info(`${product.name} removed from wishlist`)
+        } else {
+            const result = await addToWishlist(product._id)
+            if (result?.success) {
+                toast.success(`${product.name} added to wishlist!`)
+            } else {
+                toast.info('Already in wishlist')
+            }
+        }
     }
 
     return (
@@ -174,7 +192,7 @@ const Products = () => {
                             <div className="ProductListing_productCard__1kVwy" key={product._id}>
 
                                 <div className="ProductListing_cardBadge__IUAcG">
-                                    <span className="ProductListing_cardDiscount__618xO" style={{backgroundColor: 'red'}}>
+                                    <span className="ProductListing_cardDiscount__618xO" style={{ backgroundColor: 'red' }}>
                                         {product.discount}
                                     </span>
                                 </div>
@@ -209,8 +227,12 @@ const Products = () => {
                                         🛒 Add to Cart
                                     </button>
 
-                                    <button className="ProductListing_wishlist__0pSHd ProductListing_buyButton__wnDyg">
-                                        ♡
+                                    <button
+                                        className="ProductListing_wishlist__0pSHd ProductListing_buyButton__wnDyg"
+                                        onClick={() => handleWishlist(product)}
+                                        style={{ color: isInWishlist(product._id) ? 'red' : 'inherit' }}
+                                    >
+                                        {isInWishlist(product._id) ? '♥' : '♡'}
                                     </button>
                                 </div>
 
